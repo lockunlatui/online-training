@@ -1,0 +1,47 @@
+<h1>{{ title }}</h1>
+
+<ng-container *ngIf="questionList?.[currentQuestion] && !isSubmit">
+  <p>{{ questionList[currentQuestion].question }}</p>
+  <ul class="list-group">
+    <li
+      *ngFor="let question of questionList[currentQuestion].answers"
+      class="list-group-item"
+    >
+      <input
+        class="form-check-input me-1"
+        type="radio"
+        name="listGroupRadio"
+        [value]="question.name"
+        id="firstRadio"
+        [checked]="checked(question.name)"
+        (change)="chooseAnswer($event)"
+      />
+      <label class="form-check-label" for="firstRadio">{{
+        question.name
+      }}</label>
+    </li>
+  </ul>
+  <div class="container mt-2">
+    <div class="row justify-content-between">
+      <div *ngIf="currentQuestion >= 1" class="col-4">
+        <button (click)="onPrevious()" type="button" class="btn btn-primary">
+          Trở lại
+        </button>
+      </div>
+      <div *ngIf="questionList.length !== currentQuestion + 1" class="col-4">
+        <button (click)="onNext()" type="button" class="btn btn-primary">
+          Tiếp theo
+        </button>
+      </div>
+      <div *ngIf="questionList.length === currentQuestion + 1" class="col-4">
+        <button (click)="onSubmit()" type="button" class="btn btn-primary">
+          Nộp bài
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isSubmit">
+  <h1>Score: {{ score }}</h1>
+</ng-container>
